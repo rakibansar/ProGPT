@@ -34,21 +34,20 @@ public class BaseProgpt extends PropertyProgpt {
 
         switch (browserName.toLowerCase()) {
             case "chrome":
-                WebDriverManager.chromedriver().setup();
+    WebDriverManager.chromedriver().setup();
 
-                // Create a temp user profile directory to avoid session conflict
-                Path tempProfile = Files.createTempDirectory("chrome-user-data");
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+    options.addArguments("--disable-gpu");
 
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--user-data-dir=" + tempProfile.toString());
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
+    // Optional: Run headless in CI
+    if (System.getenv("CI") != null) {
+        options.addArguments("--headless=new");
+    }
 
-                // Optional: headless mode (comment this line if you want visible UI)
-                // options.addArguments("--headless=new");
-
-                driver = new ChromeDriver(options);
-                break;
+    driver = new ChromeDriver(options);
+    break;
 
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
