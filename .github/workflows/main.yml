@@ -10,16 +10,17 @@ on:
     branches: [ main ] # Triggers the workflow on pull requests targeting the main branch
 
 jobs:
-  build: # This is the name of the job
-    runs-on: ubuntu-latest # Specifies the type of machine to run the job on
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4 # Checks out the repository to the runner's file system
+      - uses: actions/checkout@v4 # Check out the repo
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17' # Sets up Java JDK 17
-          distribution: 'temurin' # Use Temurin distribution
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Cache Maven dependencies
         uses: actions/cache@v4
@@ -29,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run Maven tests
-        run: mvn verify #  Runs the Maven verify goal, which typically executes tests
-        # You can also use "mvn test" if you only want to run the tests.
-        # "mvn verify"  also runs any integration tests and checks
+      - name: Run Maven tests from Testngfile folder
+        run: |
+          cd Testngfile
+          mvn verify
