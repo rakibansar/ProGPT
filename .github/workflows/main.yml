@@ -33,4 +33,3 @@ jobs:
         run: mvn verify #  Runs the Maven verify goal, which typically executes tests
         # You can also use "mvn test" if you only want to run the tests.
         # "mvn verify"  also runs any integration tests and checks
-        #  the project is ready for release.
