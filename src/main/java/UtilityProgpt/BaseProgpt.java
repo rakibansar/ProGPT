@@ -2,6 +2,8 @@ package UtilityProgpt;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,79 +16,93 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseProgpt extends PropertyProgpt {
-	
+
     public static Logger log = LogManager.getLogger(BaseProgpt.class);
+    public static WebDriver driver;
 
+    public static void launchbrowser(String browserName) throws IOException {
+        readdata();
 
-	public static WebDriver driver;
+        switch (browserName.toLowerCase()) {
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
 
-	
-	public static void launchbrowser(String browserName) throws IOException {
-		readdata();
-		switch (browserName.toLowerCase()) {
-		case "chrome":
-			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
-			break;
-		case "firefox":
-			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
-			break;
-		case "edge":
-			WebDriverManager.edgedriver().setup();
-			driver = new EdgeDriver();
-			break;
+                // Create a temp user profile directory to avoid session conflict
+                Path tempProfile = Files.createTempDirectory("chrome-user-data");
 
-		}
-	}
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--user-data-dir=" + tempProfile.toString());
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
 
-	public static void webURL(String weburl) throws InterruptedException {
-//	Log.startTestCase("launched browser " + weburl);
-		driver.get(weburl);
-		System.out.println("WEB url " + weburl);
-	}
+                // Optional: headless mode (comment this line if you want visible UI)
+                // options.addArguments("--headless=new");
 
-	public void quit()   
-	{
-		driver.quit();
-	}
+                driver = new ChromeDriver(options);
+                break;
 
-	public static void waitelement(String path) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
 
-	}
-	
-	public static String screenShot( String filename) {
-		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-		File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "\\Screenshots\\" + filename + "_"  + ".png";
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
 
-		try {
-			FileUtils.copyFile(source, new File(destination));
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return destination;
-		
-	}
-	
-	public static void switchwindow( ) 
-	{
-		Set<String> Windowhandles = driver.getWindowHandles();
-		Iterator<String> iterator = Windowhandles.iterator();
-		String mainhandle = iterator.next();
-		String Subhandle  = iterator.next();
-		driver.switchTo().window(Subhandle);
+            default:
+                throw new IllegalArgumentException("Unsupported browser: " + browserName);
+        }
+    }
 
-	}
-	
-	
+    public static void webURL(String weburl) throws InterruptedException {
+        driver.get(weburl);
+        System.out.println("WEB url " + weburl);
+    }
+
+    public void quit() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    public static void waitelement(String xpath) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+    }
+
+    public static String screenShot(String filename) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        String destination = System.getProperty("user.dir") + "\\Screenshots\\" + filename + ".png";
+
+        try {
+            FileUtils.copyFile(source, new File(destination));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return destination;
+    }
+
+    public static void switchwindow() {
+        Set<String> windowHandles = driver.getWindowHandles();
+        Iterator<String> iterator = windowHandles.iterator();
+        String mainHandle = iterator.next();
+        String subHandle = iterator.hasNext() ? iterator.next() : null;
+
+        if (subHandle != null) {
+            driver.switchTo().window(subHandle);
+        }
+    }
 }
