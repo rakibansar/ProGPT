@@ -28,7 +28,7 @@ public class AIagentlistTestcases extends AIAgentslistPage {
 		launchbrowser(browserName);
 		webURL(progptStaging);
 		LoginPage loginpage = new LoginPage();
-		loginpage.loginuser("rakib@yopmail.com", "Rakib@123");
+		loginpage.loginuser("rakib@yopmail.com", "Rakib@*1#");
 		Thread.sleep(3000);
 		dashboardpage.aiagenttab();
 	}
