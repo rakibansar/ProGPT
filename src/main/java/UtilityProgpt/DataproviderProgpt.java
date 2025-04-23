@@ -9,7 +9,7 @@ public class DataproviderProgpt {
 	{	
 		return new Object[][] 
 		{	
-			{"Rakib@yopmail.com", "Rakib@123", "Dashboard | ProGPT"},           
+			{"Rakib@yopmail.com", "Rakib@*1#", "Dashboard | ProGPT"},           
 			{"Rakib1@yopmail.com","Rakib1@123", "Sign In | ProGPT"},           
 			{"Rakib12@yopmail.com","Rakib1@123", "Sign In | ProGPT"},           
 
