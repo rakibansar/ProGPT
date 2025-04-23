@@ -23,7 +23,7 @@ public class CreateNewAIagentTestcases extends CreateNewAIAgentPage{
 			launchbrowser(browserName);
 			webURL(progptStaging);
 			loginpage = new LoginPage();
-			loginpage.loginuser("rakib@yopmail.com", "Rakib@123");
+		        loginpage.loginuser("rakib@yopmail.com", "Rakib@*1#");
 			Thread.sleep(3000);
 		}
 		
