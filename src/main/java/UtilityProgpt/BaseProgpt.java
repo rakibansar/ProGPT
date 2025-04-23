@@ -35,17 +35,12 @@ public class BaseProgpt extends PropertyProgpt {
         switch (browserName.toLowerCase()) {
             case "chrome":
     WebDriverManager.chromedriver().setup();
-
     ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless"); // headless mode
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
-    options.addArguments("--disable-gpu");
-
-    // Optional: Run headless in CI
-    if (System.getenv("CI") != null) {
-        options.addArguments("--headless=new");
-    }
-
+    options.addArguments("--disable-gpu"); // (optional but useful)
+    options.addArguments("--remote-allow-origins=*"); // if needed for CORS issues
     driver = new ChromeDriver(options);
     break;
 
