@@ -32,5 +32,4 @@ jobs:
 
       - name: Run Maven tests from Testngfile folder
         run: |
-          cd Testngfile
           mvn verify
