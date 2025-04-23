@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+	<test name="Chrome Test">
+		<parameter name="browser" value="chrome" />
+		<parameter name="url" value="https://staging.progpt.biz/login" />
+		<groups>
+			<run>
+				<include name="Sanity" />
+			</run>
+		</groups>
+		<classes>
+			<class name="TestcasesProgpt.LoginTestcases" />
+			<class name="TestcasesProgpt.DashboardTestcases" />
+			<class name="TestcasesProgpt.CreateNewAIagentTestcases" />
+			<class name="TestcasesProgpt.AIagentlistTestcases" />
+			<class name="TestcasesProgpt.AgentDetailsTestcases" />
+
+		</classes>
+	</test>
+
+	<test name="Firefox Test">
+		<parameter name="browser" value="firefox" />
+		<parameter name="url" value="https://staging.progpt.biz/login" />
+		<groups>
+			<run>
+				<include name="Sanity" />
+			</run>
+		</groups>
+		<classes>
+			<class name="TestcasesProgpt.LoginTestcases" />
+			<class name="TestcasesProgpt.DashboardTestcases" />
+			<class name="TestcasesProgpt.CreateNewAIagentTestcases" />
+			<class name="TestcasesProgpt.AIagentlistTestcases" />
+			<class name="TestcasesProgpt.AgentDetailsTestcases" />
+
+		</classes>
+	</test>
+
+	<test name="Edge Test">
+		<parameter name="browser" value="edge" />
+		<parameter name="url" value="https://staging.progpt.biz/login" />
+		<groups>
+			<run>
+				<include name="Sanity" />
+			</run>
+		</groups>
+		<classes>
+			<class name="TestcasesProgpt.LoginTestcases" />
+			<class name="TestcasesProgpt.DashboardTestcases" />
+			<class name="TestcasesProgpt.CreateNewAIagentTestcases" />
+			<class name="TestcasesProgpt.AIagentlistTestcases" />
+			<class name="TestcasesProgpt.AgentDetailsTestcases" />
+
+		</classes>
+	</test>
+
+</suite>
