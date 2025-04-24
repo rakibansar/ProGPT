@@ -36,19 +36,13 @@ public class BaseProgpt extends PropertyProgpt {
             case "chrome":
             WebDriverManager.chromedriver().setup();
 
-            ChromeOptions options = new ChromeOptions();
+             ChromeOptions options = new ChromeOptions();
+            // Optional: Run in headless mode
+            options.addArguments("--headless=new");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--remote-allow-origins=*");
-
-            // Optional: Run in headless mode
-            // options.addArguments("--headless=new");
-
-            // ✅ Set unique user data directory to avoid session conflict
-            Path tempUserDataDir = Files.createTempDirectory("chrome-user-data");
-            options.addArguments("--user-data-dir=" + tempUserDataDir.toAbsolutePath());
-
+            options.addArguments("--disable-gpu"); // (optional but useful)
+            options.addArguments("--remote-allow-origins=*"); // if needed for CORS issues
             driver = new ChromeDriver(options);
             break;
 
