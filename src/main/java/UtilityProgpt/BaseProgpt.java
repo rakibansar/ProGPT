@@ -36,6 +36,7 @@ public class BaseProgpt extends PropertyProgpt {
             case "chrome":
     WebDriverManager.chromedriver().setup();
     ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless"); // <<<<<< THIS enables headless mode
     options.addArguments("--no-sandbox");
     options.addArguments("--disable-dev-shm-usage");
     options.addArguments("--disable-gpu"); // (optional but useful)
