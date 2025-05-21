@@ -14,6 +14,8 @@ import PageObjectProgpt.AgentDetailsPage;
 import PageObjectProgpt.DashboardPage;
 import PageObjectProgpt.LoginPage;
 
+
+
 public class AgentDetailsTestcases extends AgentDetailsPage {
 	
 	private	DashboardPage dashboardpage = new DashboardPage();
@@ -28,8 +30,8 @@ public class AgentDetailsTestcases extends AgentDetailsPage {
 		LoginPage loginpage = new LoginPage();
 		loginpage.loginuser("rakib@yopmail.com", "Rakib@*1#");
 		Thread.sleep(3000);
-		dashboardpage.aiagenttab();
-		aiAgentslistpage.searchagent ("e") ;
+		dashboardpage.aiagentsidetab();
+		aiAgentslistpage.searchagent().sendKeys ("e") ;
 		aiAgentslistpage.agentdeploy() ;
 	}
 	

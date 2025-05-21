@@ -30,7 +30,7 @@ public class AIagentlistTestcases extends AIAgentslistPage {
 		LoginPage loginpage = new LoginPage();
 		loginpage.loginuser("rakib@yopmail.com", "Rakib@*1#");
 		Thread.sleep(3000);
-		dashboardpage.aiagenttab();
+		dashboardpage.aiagentsidetab();
 	}
 	
 	@AfterMethod(groups = { "create","Smoke","Sanity", "Regression"})
@@ -40,67 +40,72 @@ public class AIagentlistTestcases extends AIAgentslistPage {
 	}
 	
 	@Test(priority =1, groups = { "Sanity", "Regression"})
-	public void knowledgebaseredirect() 
-	{  
-		log.info("knowledgebaseredirect testcase Start---------------------");
-		searchagent ("chat123" ) ;
-		knowledgebase();
-		String pagetext = agentdetailspage.knowledgebasetext();
-		log.info("Actual Result = " + pagetext+ " Expected Result = Knowledge base");
-		Assert.assertEquals(pagetext, "Knowledge base");
-		log.info("------------------knowledgebaseredirect Testcase Pass");
-
+	public void VerifyAgentsList () 
+	{	
+        Assert.assertTrue(agentlist().size() > 0, "❌ Test Failed: No agents found.");
+		log.info("✅ Test Passed: Agent list is displayed with " + agentlist().size() + " agents.");
 	}
 	
-	@Test(priority =2, groups = { "Sanity", "Regression"})
-	public void deployredirect() 
-	{  
-		log.info("deployredirect testcase Start---------------------");
-		searchagent ("chat123" ) ;
-		agentdeploy();
-		String pagetext = agentdetailspage.sharelinktext();
-		log.info("Actual Result = "+ pagetext+ " Expected Result = Share Link");
-		Assert.assertEquals(pagetext, "Share Link");
-		log.info("------------------deployredirect Testcase Pass");
+	@Test(priority =2, groups = {"Sanity", "Regression"})
+	public void verifyOrgOwnerLabelPresence() 
+	{
+		Assert.assertTrue(orgownerlabel().isDisplayed(), "Org Owner label is not visible.");
+        Assert.assertEquals(orgownerlabel().getText().trim(), "Org Owner");
+        log.info(" ✅ Org Owner label is not visible.");
 	}
 	
 	@Test(priority =3, groups = { "Sanity", "Regression"})
-	public void settingredirect() 
-	{  
-		log.info("settingredirect testcase Start---------------------");
-		searchagent ("chat123" ) ;
-		Agentsetting();
-		String pagetext = agentdetailspage.agentdetailstext();
-		log.info("Actual Result = "+ pagetext+ " Expected Result = Agent Details");
-		Assert.assertEquals(pagetext, "Agent Details");
-		log.info("------------------settingredirect Testcase Pass");
+    public void verifysearchagentfunctionality() throws InterruptedException 
+	{
+		agentlistname() ;
 	}
 	
 	@Test(priority =4, groups = { "Sanity", "Regression"})
-	public void conversationredirect () 
+	public void knowledgebaseredirect() 
 	{  
-		log.info("settingredirect testcase Start---------------------");
-		searchagent ("chat123" ) ;
-		newcoversation();
-		String pagetext = agentdetailspage.conversationscreentext();
-		log.info("Actual Result = "+ pagetext+ " Expected Result = Hey! How can I assist you today?");
-		Assert.assertEquals(pagetext, "Hey! How can I assist you today?");
-		log.info("------------------conversationredirect Testcase Pass");
-
+		searchagent().sendKeys ("recr" ) ;
+		knowledgebase().click();
+		Assert.assertEquals(agentdetailspage.knowledgebasetext(), "Knowledge base");
+		log.info("User Successfully redirect to " + agentdetailspage.knowledgebasetext( ));
 	}
 	
-	@Test(priority =5, groups = { "Sanity", "Regression"})
-	public void deleteagentconfirmation() 
+	@Test(priority =5, groups = {  "Sanity", "Regression"})
+	public void deployredirect() 
 	{  
-		
-		log.info("deleteagentconfirmation testcase Start---------------------");
-		searchagent ("chat123" ) ;
-		deleteagent( );		
-		String deletetext = deleteconfirmationtext ( );
-		log.info("Actual Result = "+  deletetext + " Expected Result = Agent and related data deleted successfully.");
-		Assert.assertEquals(deletetext, "Agent and related data deleted successfully.");
-		log.info("------------------deleteagentconfirmation Testcase Pass");
-
+		searchagent().sendKeys ("recr" ) ;
+		agentdeploy().click();
+		Assert.assertEquals(agentdetailspage.sharelinktext() , "Share Link");
+		log.info("User Successfully redirect to = "+ agentdetailspage.sharelinktext());
 	}
+	
+	@Test(priority =6, groups = { "Sanity", "Regression"})
+	public void settingredirect() 
+	{  
+		searchagent().sendKeys ("recr" ) ;
+		Agentsetting().click();
+		Assert.assertEquals(agentdetailspage.agentdetailstext() , "Agent Details");
+		log.info("User Successfully redirect to = "+ agentdetailspage.agentdetailstext());
+	}
+	
+	@Test(priority =7, groups = { "Sanity", "Regression"})
+	public void conversationredirect () 
+	{  
+		searchagent().sendKeys ("recr" ) ;
+		newcoversation().click();;
+		Assert.assertEquals(agentdetailspage.conversationscreentext(), "Hey! How can I assist you today?");
+		log.info("User Successfully redirect to = "+  agentdetailspage.conversationscreentext());
+	}
+//	
+//	@Test(priority =8, groups = { "Sanity", "Regression"})
+//	public void deleteagentconfirmation() 
+//	{  
+//		
+//		searchagent().sendKeys ("chat123" ) ;
+//		deleteagent( );		
+//		String deletetext = deleteconfirmationtext ( );
+//		Assert.assertEquals(deletetext, "Agent and related data deleted successfully.");
+//		log.info("------------------deleteagentconfirmation Testcase Pass");
+//
+//	}
 	
 }

@@ -11,7 +11,7 @@ import UtilityProgpt.BaseProgpt;
 public class AgentDetailsPage extends BaseProgpt {
 
 	private String agentdetailstextlocator = "//span[contains(text(),'Agent Details')]";
-	private String knowledgebasetextlocator = "//div[@class=\"MuiBox-root css-hasfov\"]";
+	private String knowledgebasetextlocator = "//div[@class='MuiBox-root css-hasfov']";
 	private String conversationscreentextlocator = "//h6[@class=\"MuiTypography-root MuiTypography-h6 css-m50ydm\"]";
 
 	private String sharelinklocator = "//button[contains(text(),'Share Link')]";
@@ -25,7 +25,8 @@ public class AgentDetailsPage extends BaseProgpt {
 	private String embedonwebsitelocator = "//button[contains(text(),'Embed on Website')]";
 	private String integratewithplateformlocator = "//button[contains(text(),'Integrate With Platforms')]";
 
-//  Get text for Ai agentlist  assertion Knowledge base And Deploy Setting agentdetails And Conversation .
+//  Get text for AI agent list  assertion Knowledge base And Deploy Setting agent details And Conversation .
+	
 	public String knowledgebasetext() {
 		waitelement(knowledgebasetextlocator);
 		WebElement knowledgebasetext = driver.findElement(By.xpath(knowledgebasetextlocator));
@@ -35,7 +36,8 @@ public class AgentDetailsPage extends BaseProgpt {
 	}
 
 	// Deploy assertion
-	public String sharelinktext() {
+	public String sharelinktext() 
+	{
 		waitelement(sharelinklocator);
 		WebElement Sharelink = driver.findElement(By.xpath(sharelinklocator));
 		String Sharelinktext = Sharelink.getText();
@@ -43,7 +45,7 @@ public class AgentDetailsPage extends BaseProgpt {
 
 	}
 
-	// Setting agentdetails
+	// Setting agent details
 	public String agentdetailstext() {
 		waitelement(agentdetailstextlocator);
 		WebElement Sharelink = driver.findElement(By.xpath(agentdetailstextlocator));
